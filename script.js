@@ -41,27 +41,62 @@
 // console.log(logger(),Name);
 
 
+// const express=require("express");
+
+// const app=express(); 
+
+// const path=require("path");
+
+// app.get("/",(req,res)=>{//get express method to simplifies GET method
+//     res.sendFile(path.join(__dirname,"views","index.html"));
+// });
+// app.get("/contact",(req,res)=>{//get express method to simplifies GET method
+//     res.sendFile(path.join(__dirname,"views","contact.html"));
+// });
+// app.get("*",(req,res)=>{//* used for get 404 Error message
+//     res.status(404); //.status is used for change the status code from default 200 to error 404
+//     res.send("<h1>404</h1>");
+// });
+
+// const PORT=process.env.PORT || 3001;
+
+// app.listen(PORT,()=>{
+//     console.log(`server running on PORT ${PORT}`)
+// });
+
+
 const express=require("express");
 
 const app=express(); 
-
 const path=require("path");
+const Token=require("./middlewire/token")
+const Validation=require("./middlewire/validation");
+app.use(DateGenerator);
+const Middlewire= [Token , Validation ];
+// const token="123";
+app.get("/profile",Middlewire,(req,res)=>{//* used for get 404 Error message
+   console.log("user logged");
+   
+    res.send("<h1>Success</h1>");
+});
+app.get("/",(req,res)=>{//* used for get 404 Error message
+   console.log("Default URL");
+   
+    res.send("<h1>Home</h1>");
+});
 
-app.get("/",(req,res)=>{//get express method to simplifies GET method
-    res.sendFile(path.join(__dirname,"views","index.html"));
-});
-app.get("/contact",(req,res)=>{//get express method to simplifies GET method
-    res.sendFile(path.join(__dirname,"views","contact.html"));
-});
-app.get("*",(req,res)=>{//* used for get 404 Error message
-    res.status(404); //.status is used for change the status code from default 200 to error 404
-    res.send("<h1>404</h1>");
-});
+
+function DateGenerator(req,res,next){
+    console.log(new Date());
+    next();
+}
 
 const PORT=process.env.PORT || 3001;
 
 app.listen(PORT,()=>{
     console.log(`server running on PORT ${PORT}`)
 });
+
+
 
 
